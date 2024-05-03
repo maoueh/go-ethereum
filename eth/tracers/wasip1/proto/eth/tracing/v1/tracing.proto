@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package acme;
+
+option go_package = "github.com/ethereum/go-ethereum/eth/tracers/wasip1/pb/eth/tracing/v1;pbtracing";
+
+message OnBlockchainInitMessage {
+    ChainConfig chain_config = 1;
+}
+
+message ChainConfig {
+    BigInt chain_id = 1;
+    BigInt homestead_block = 2;
+    BigInt dao_fork_block = 3;
+    bool dao_fork_support = 4;
+    BigInt eip150_block = 5;
+    BigInt eip155_block = 6;
+    BigInt eip158_block = 7;
+    BigInt byzantium_block = 8;
+    BigInt constantinople_block = 9;
+    BigInt petersburg_block = 10;
+    BigInt istanbul_block = 11;
+    BigInt muir_glacier_block = 12;
+    BigInt berlin_block = 13;
+    BigInt london_block = 14;
+    BigInt arrow_glacier_block = 15;
+    BigInt gray_glacier_block = 16;
+    BigInt merge_netsplit_block = 17;
+    optional uint64 shanghai_time = 18;
+    optional uint64 cancun_time = 19;
+    optional uint64 prague_time = 20;
+    optional uint64 verkle_time = 21;
+    BigInt terminal_total_difficulty = 22;
+    bool terminal_total_difficulty_passed = 23;
+}
+
+message OnEnterMessage {
+    int64 depth = 1;
+    uint64 op_code = 2;
+    bytes from = 3;
+    bytes to = 4;
+    bytes input = 5;
+    uint64 gas = 6;
+    BigInt value = 7;
+}
+
+message OnExitMessage {
+    int64 depth = 1;
+    bytes output = 2;
+    uint64 gas_used = 3;
+    bool reverted = 4;
+    optional string error = 5;
+}
+
+message OnOpcodeMessage {
+    uint64 pc = 1;
+    uint64 op_code = 2;
+    uint64 gas = 3;
+    uint64 cost = 4;
+    bytes r_data = 5;
+    int32 depth = 6;
+    optional string error = 7;
+}
+
+message OnFaultMessage {
+    uint64 pc = 1;
+    uint64 op_code = 2;
+    uint64 gas = 3;
+    uint64 cost = 4;
+    int32 depth = 5;
+    optional string error = 6;
+}
+
+message OnGasChangeMessage {
+    uint64 old = 1;
+    uint64 new = 2;
+    uint64 reason = 3;
+}
+
+message BigInt {
+    // The value is stored as a byte array in big-endian order, will contain at
+    // most 32 bytes.
+    bytes value = 1;
+}
